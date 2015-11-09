@@ -235,6 +235,7 @@ string get_send_data(int s, string tmp_string)
 {
     char char_size[10];
     recv(s,char_size,sizeof(char_size),0);
+    cout << "char size = " << char_size << endl;
     send(s,char_size,sizeof(char_size),0);
     int size=atoi(char_size);
 
@@ -242,20 +243,22 @@ string get_send_data(int s, string tmp_string)
     char *tmp_receive = new char[size];
 
     recv(s,tmp_receive,size,0);
+    cout << "tmp receive = " << tmp_receive << endl;
 
 
-
-    char *tmp_send = new char [tmp_string.size()+1];
+    char *tmp_send = new char [tmp_string.length()+1];
     strcpy(tmp_send,tmp_string.c_str());
     size=tmp_string.length();
     sprintf(char_size,"%d",size);
     send(s,char_size,sizeof(char_size),0);
     recv(s,char_size,sizeof(char_size),0);
+    cout << "char size = " << char_size << endl;
 
 
     send(s,tmp_send,size,0);
 
 
     string tmp_result(tmp_receive);
+    cout << "resault = " << tmp_result << endl;
     return tmp_result;
 }

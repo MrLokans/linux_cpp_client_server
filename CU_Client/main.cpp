@@ -200,7 +200,7 @@ string get_string(string phrase)
     cout.flush();
     tmp_string.clear();
     getline(cin,tmp_string);
-    tmp_string.resize(20);
+    //tmp_string.resize(20);
     cin.clear();
     cout.flush();
     string log = phrase+tmp_string;
@@ -211,7 +211,7 @@ string get_string(string phrase)
 string send_get(int s, string tmp_string)
 {
     //размер
-    char *tmp_send = new char [tmp_string.size()+1];
+    char *tmp_send = new char [tmp_string.length()+1];
     strcpy(tmp_send,tmp_string.c_str());
 
     int str_size=tmp_string.length();
@@ -219,6 +219,7 @@ string send_get(int s, string tmp_string)
     char char_size[10];
     sprintf(char_size,"%d",str_size);
 
+    cout << "send char size = " << char_size << endl;
     send(s,char_size,sizeof(char_size),0);
     recv(s,char_size,sizeof(char_size),0);
 
@@ -228,7 +229,7 @@ string send_get(int s, string tmp_string)
 
     send(s,char_size,sizeof(char_size),0);
     str_size=atoi(char_size);
-
+    cout << "str size = " << str_size << endl;
     char *tmp_receive = new char[str_size];
     recv(s,tmp_receive,str_size,0);
 
