@@ -204,7 +204,7 @@ string get_string(string phrase)
     cin.clear();
     cout.flush();
     string log = phrase+tmp_string;
-    do_log(log, true);
+   // do_log(log, true);
     return tmp_string;
 }
 
@@ -267,11 +267,11 @@ void do_log(string info)
 
 void do_log(string info, bool no_cout)
 {
-    fstream log_file;
-    string my_time = get_time();
-    log_file.open("client_log.txt");
+   // fstream log_file;
+    //string my_time = get_time();
+    //log_file.open("client_log.txt");
   //  cout << "1";
-    log_file << my_time << " (" << ID <<") " << info << endl;
+   // log_file << my_time << " (" << ID <<") " << info << endl;
  //   cout << "2";
-    log_file.close();
+    //log_file.close();
 }

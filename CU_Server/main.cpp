@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
+#include <sstream>
 using namespace std;
 
 string get_send_data(int s, string tmp_string);
@@ -31,6 +31,18 @@ struct customer_information
 };
 
 vector <customer_information> clients(0);
+
+namespace to_string_patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
+using namespace to_string_patch;
 
 
 int Func(int newS)
