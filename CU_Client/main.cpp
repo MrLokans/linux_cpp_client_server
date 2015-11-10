@@ -70,7 +70,7 @@ int main()
                 for (unsigned int i = 0; i<size;i++)
                 {
                     unsigned int j = i+1;
-                    cout << "Note №" << j << endl;
+                    cout << "Note number:" << j << endl;
                     cout << "Name: " << send_get(s,"Send name") << endl;
                     cout << "Address: " << send_get(s,"Send address") << endl;
                     cout << "Mail: " << send_get(s,"Send mail") << endl;
@@ -199,7 +199,7 @@ string get_string(string phrase)
     cin.clear();
     cout.flush();
     tmp_string.clear();
-    getline(cin,tmp_string);
+    getline(cin, tmp_string);
     //tmp_string.resize(20);
     cin.clear();
     cout.flush();

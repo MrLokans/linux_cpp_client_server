@@ -231,34 +231,56 @@ int main()
     return 0;
 }
 
+
+int get_message_size_from_client(int s)
+{
+    char message_size_string[128];
+    recv(s, message_size_string, 128, 0);
+
+    int size = atoi(message_size_string);
+    send(s, message_size_string, sizeof(message_size_string), 0);
+    return size;
+}
+
+string get_message_of_given_length(int s, int message_length)
+{
+    char* incoming_message = new char[message_length];
+    recv(s, incoming_message, message_length, 0);
+
+    char *p;
+    sprintf(p, "%d", message_length);
+
+    send(s, p, strlen(p), 0);
+    return string(incoming_message);
+}
+
+void send_message_size_to_client(int s, string message)
+{
+    int message_length = message.length();
+
+    char *p;
+    sprintf(p, "%d", message_length);
+
+    send(s, p, strlen(p), 0);
+    recv(s, p, strlen(p), 0);
+}
+
+void send_message_to_client(int s, string message)
+{
+    char message_cstr = message.c_str();
+    send(s, message_cstr, strlen(message_cstr), 0);
+    // recv(s, message_cstr, strlen(message_cstr), 0);
+}
+
 string get_send_data(int s, string tmp_string)
 {
     char char_size[10];
-    recv(s,char_size,sizeof(char_size),0);
-    cout << "char size = " << char_size << endl;
-    send(s,char_size,sizeof(char_size),0);
-    int size=atoi(char_size);
+    int income_message_size = get_message_size_from_client(s);
 
+    string client_message = get_message_of_given_length(s, income_message_size);
 
-    char *tmp_receive = new char[size];
-
-    recv(s,tmp_receive,size,0);
-    cout << "tmp receive = " << tmp_receive << endl;
-
-
-    char *tmp_send = new char [tmp_string.length()+1];
-    strcpy(tmp_send,tmp_string.c_str());
-    size=tmp_string.length();
-    sprintf(char_size,"%d",size);
-    send(s,char_size,sizeof(char_size),0);
-    recv(s,char_size,sizeof(char_size),0);
-    cout << "char size = " << char_size << endl;
-
-
-    send(s,tmp_send,size,0);
-
-
-    string tmp_result(tmp_receive);
-    cout << "resault = " << tmp_result << endl;
-    return tmp_result;
+    send_message_size_to_client(s, tmp_string);
+    send_message_to_client(s, tmp_string);
+    
+    return client_message;
 }
